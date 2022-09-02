@@ -26,7 +26,6 @@ export const verifyAll = ({
     verifyLongitude(longitude),
     verifyEvent(event),
   ];
-  console.log(boolArrayVerify);
 
   return boolArrayVerify.every((bool) => bool);
 };
