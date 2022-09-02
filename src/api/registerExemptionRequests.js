@@ -1,4 +1,4 @@
-import API from './apiConection';
+import API from './apiConnection';
 
 const register = (payload) => API.post('exemptionrequests/', payload);
 
