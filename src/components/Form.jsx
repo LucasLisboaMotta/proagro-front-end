@@ -18,10 +18,10 @@ export default function Form({ onClickRegisterButton }) {
   const makeStatusObject = () => ({
     name: nameInput,
     email: emailInput,
-    CPF: CPFInput,
+    cpf: CPFInput,
     date: dateInput,
-    latitude: latitudeInput,
-    longitude: longitudeInput,
+    latitude_location: latitudeInput,
+    longitude_location: longitudeInput,
     event: eventInput,
   });
 
@@ -78,7 +78,7 @@ export default function Form({ onClickRegisterButton }) {
           id="latitude-input"
           type="number"
           value={latitudeInput}
-          onChange={({ target: { value } }) => setLatitudeInput(value)}
+          onChange={({ target: { value } }) => setLatitudeInput(Number(value))}
         />
       </label>
 
@@ -88,7 +88,7 @@ export default function Form({ onClickRegisterButton }) {
           id="longitude-input"
           type="number"
           value={longitudeInput}
-          onChange={({ target: { value } }) => setLongitudeInput(value)}
+          onChange={({ target: { value } }) => setLongitudeInput(Number(value))}
         />
       </label>
 
