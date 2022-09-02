@@ -1,8 +1,18 @@
 import React from 'react';
-import { arrayOf, object } from 'prop-types';
+import {
+  arrayOf, shape, number, string,
+} from 'prop-types';
 import Card from './Card';
 
 export default function ExemptionRequestList({ requestArray }) {
+  const sortRequest = ({ create_at: createA }, { create_at: createB }) => {
+    if (new Date(createA) < new Date(createB)) return 1;
+    if (new Date(createA) > new Date(createB)) return -1;
+    return 0;
+  };
+
+  const mapCards = (request) => <Card request={request} key={`card-list-${request.id}`} />;
+
   return (
     <table>
       <thead>
@@ -19,10 +29,22 @@ export default function ExemptionRequestList({ requestArray }) {
         </tr>
       </thead>
       <tbody>
-        {requestArray.map((request) => <Card request={request} />)}
+        {requestArray.sort(sortRequest).map(mapCards)}
       </tbody>
     </table>
   );
 }
 
-ExemptionRequestList.propTypes = ({ requestArray: arrayOf(object()).isRequired });
+ExemptionRequestList.propTypes = ({
+  requestArray: arrayOf(shape({
+    id: string,
+    name: string,
+    email: string,
+    cpf: string,
+    latitude_location: number,
+    longitude_location: number,
+    date: string,
+    event: string,
+    create_at: string,
+  }).isRequired).isRequired,
+});
