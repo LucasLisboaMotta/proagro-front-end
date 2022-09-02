@@ -20,8 +20,8 @@ export default function Form({ onClickRegisterButton }) {
     email: emailInput,
     cpf: CPFInput,
     date: dateInput,
-    latitude_location: latitudeInput,
-    longitude_location: longitudeInput,
+    latitude_location: Number(latitudeInput),
+    longitude_location: Number(longitudeInput),
     event: eventInput,
   });
 
@@ -76,9 +76,9 @@ export default function Form({ onClickRegisterButton }) {
         Latitude:
         <input
           id="latitude-input"
-          type="number"
+          type="text"
           value={latitudeInput}
-          onChange={({ target: { value } }) => setLatitudeInput(Number(value))}
+          onChange={({ target: { value } }) => setLatitudeInput(value)}
         />
       </label>
 
@@ -86,9 +86,9 @@ export default function Form({ onClickRegisterButton }) {
         Longitude:
         <input
           id="longitude-input"
-          type="number"
+          type="text"
           value={longitudeInput}
-          onChange={({ target: { value } }) => setLongitudeInput(Number(value))}
+          onChange={({ target: { value } }) => setLongitudeInput(value)}
         />
       </label>
 
@@ -99,7 +99,7 @@ export default function Form({ onClickRegisterButton }) {
           value={eventInput}
           onChange={({ target: { value } }) => setEventInput(value)}
         >
-          { eventList.map((event) => <option value={event} key={`event-option-${event}`}>{ event }</option>) }
+          { eventList.map((event) => <option value={event} key={`event-option-${event}`}>{ event.toLowerCase() }</option>) }
         </select>
       </label>
 
