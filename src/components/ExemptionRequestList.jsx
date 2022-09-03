@@ -1,10 +1,9 @@
-import React from 'react';
-import {
-  arrayOf, shape, number, string,
-} from 'prop-types';
+import React, { useContext } from 'react';
+import context from '../context/context';
 import Card from './Card';
 
-export default function ExemptionRequestList({ requestArray }) {
+export default function ExemptionRequestList() {
+  const { requestArray } = useContext(context);
   const sortRequest = ({ create_at: createA }, { create_at: createB }) => {
     if (new Date(createA) < new Date(createB)) return 1;
     if (new Date(createA) > new Date(createB)) return -1;
@@ -17,7 +16,6 @@ export default function ExemptionRequestList({ requestArray }) {
     <table>
       <thead>
         <tr>
-          <th>Identificador</th>
           <th>Nome</th>
           <th>E-mail</th>
           <th>CPF</th>
@@ -26,6 +24,7 @@ export default function ExemptionRequestList({ requestArray }) {
           <th>Longitude</th>
           <th>Tipo de evento</th>
           <th>Data da requisição</th>
+          <th>Editar/Excluir</th>
         </tr>
       </thead>
       <tbody>
@@ -34,17 +33,3 @@ export default function ExemptionRequestList({ requestArray }) {
     </table>
   );
 }
-
-ExemptionRequestList.propTypes = ({
-  requestArray: arrayOf(shape({
-    id: string,
-    name: string,
-    email: string,
-    cpf: string,
-    latitude_location: number,
-    longitude_location: number,
-    date: string,
-    event: string,
-    create_at: string,
-  }).isRequired).isRequired,
-});
