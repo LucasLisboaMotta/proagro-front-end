@@ -14,8 +14,10 @@ export const verifyLongitude = (longitude) => typeof longitude === 'number';
 
 export const verifyEvent = (event) => eventList.includes(event);
 
+export const verifyCrop = (crop) => crop.length >= 3;
+
 export const verifyAll = ({
-  name, email, cpf, date, latitude_location: latitude, longitude_location: longitude, event,
+  name, email, cpf, date, latitude_location: latitude, longitude_location: longitude, event, crop,
 }) => {
   const boolArrayVerify = [
     verifyName(name),
@@ -25,6 +27,7 @@ export const verifyAll = ({
     verifyLatitude(latitude),
     verifyLongitude(longitude),
     verifyEvent(event),
+    verifyCrop(crop),
   ];
 
   return boolArrayVerify.every((bool) => bool);
