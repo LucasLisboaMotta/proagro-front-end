@@ -5,6 +5,7 @@ import deleteRequest from '../api/deleteRequestById';
 
 export default function Card({ request }) {
   const { updateRequestArray } = useContext(context);
+
   const refactorCPF = (cpf) => {
     const newCPF = cpf.split('');
     newCPF.splice(3, 0, '.');
@@ -25,6 +26,7 @@ export default function Card({ request }) {
       <td>{request.name}</td>
       <td>{request.email}</td>
       <td>{refactorCPF(request.cpf)}</td>
+      <td>{request.crop}</td>
       <td>{refactorDate(request.date)}</td>
       <td>{request.latitude_location}</td>
       <td>{request.longitude_location}</td>
@@ -46,5 +48,6 @@ Card.propTypes = {
     date: string,
     event: string,
     create_at: string,
+    crop: string,
   }).isRequired,
 };
