@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { shape, number, string } from 'prop-types';
+import context from '../context/context';
+import deleteRequest from '../api/deleteRequestById';
 
 export default function Card({ request }) {
+  const { updateRequestArray } = useContext(context);
   const refactorCPF = (cpf) => {
     const newCPF = cpf.split('');
     newCPF.splice(3, 0, '.');
@@ -12,9 +15,13 @@ export default function Card({ request }) {
 
   const refactorDate = (date) => date.split('-').reverse().join('/');
 
+  const buttonFunctionDeleteRequest = async (id) => {
+    await deleteRequest(id);
+    updateRequestArray();
+  };
+
   return (
     <tr>
-      <td>{request.id}</td>
       <td>{request.name}</td>
       <td>{request.email}</td>
       <td>{refactorCPF(request.cpf)}</td>
@@ -23,6 +30,7 @@ export default function Card({ request }) {
       <td>{request.longitude_location}</td>
       <td>{request.event.toLowerCase()}</td>
       <td>{refactorDate(request.create_at)}</td>
+      <td><button type="button" onClick={() => buttonFunctionDeleteRequest(request.id)}>Excluir</button></td>
     </tr>
   );
 }
