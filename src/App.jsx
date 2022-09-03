@@ -3,6 +3,7 @@ import Form from './components/Form';
 import register from './api/registerExemptionRequests';
 import ExemptionRequestList from './components/ExemptionRequestList';
 import getAllExemptionRequests from './api/getAllExemptionRequests';
+import Provider from './context/provider';
 import './App.css';
 
 function App() {
@@ -24,8 +25,10 @@ function App() {
 
   return (
     <div className="App">
-      <Form onClickRegisterButton={registerFunction} />
-      <ExemptionRequestList requestArray={requestArray} />
+      <Provider>
+        <Form onClickRegisterButton={registerFunction} />
+        <ExemptionRequestList requestArray={requestArray} />
+      </Provider>
     </div>
   );
 }
