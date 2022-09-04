@@ -1,5 +1,5 @@
 import API from './apiConnection';
 
-const register = (payload) => API.post('exemptionrequests/', payload);
+const postRequest = (payload) => API.post('exemptionrequests/', payload);
 
-export default register;
+export default postRequest;
