@@ -1,11 +1,22 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import context from '../context/context';
-import { verifyAll } from '../utils/verifyInputs';
-import register from '../api/registerExemptionRequests';
+import {
+  verifyAll,
+  verifyCPF,
+  verifyCrop,
+  verifyDate,
+  verifyEmail,
+  verifyEvent,
+  verifyLatitude,
+  verifyLongitude,
+  verifyName,
+} from '../utils/verifyInputs';
+import postRequest from '../api/registerExemptionRequests';
+import updateRequest from '../api/updateRegister';
 import eventList from '../utils/eventList';
 
 export default function Form() {
-  const { updateRequestArray } = useContext(context);
+  const { updateRequestArray, editRequest, setEditRequest } = useContext(context);
 
   const [nameInput, setNameInput] = useState('');
   const [emailInput, setEmailInput] = useState('');
@@ -16,7 +27,7 @@ export default function Form() {
   const [longitudeInput, setLongitudeInput] = useState('');
   const [eventInput, setEventInput] = useState(eventList[0]);
 
-  const makeStatusObject = () => ({
+  const makeStateObject = () => ({
     name: nameInput,
     email: emailInput,
     cpf: CPFInput,
@@ -27,20 +38,69 @@ export default function Form() {
     event: eventInput,
   });
 
+  const clearAllInputs = () => {
+    setNameInput('');
+    setEmailInput('');
+    setDateInput('');
+    setCPFInput('');
+    setCropInput('');
+    setLatitudeInput('');
+    setLongitudeInput('');
+    setEventInput('');
+  };
+
   const isButtonDisabled = () => {
-    const currentStatus = makeStatusObject();
-    return !verifyAll(currentStatus);
+    const currentState = makeStateObject();
+    return !verifyAll(currentState);
   };
 
   const onClickRegisterButton = async () => {
-    const newRegister = makeStatusObject();
-    await register(newRegister);
+    const newRegister = makeStateObject();
+    await postRequest(newRegister);
     updateRequestArray();
+    clearAllInputs();
   };
+
+  const onClickUpdateButton = async () => {
+    const newRegister = makeStateObject();
+    await updateRequest(editRequest.prevRequest.id, newRegister);
+    updateRequestArray();
+    setEditRequest({ edit: false, prevRequest: {} });
+  };
+
+  useEffect(() => {
+    const updateState = () => {
+      if (editRequest.edit) {
+        setNameInput(editRequest.prevRequest?.name);
+        setEmailInput(editRequest.prevRequest?.email);
+        setDateInput(editRequest.prevRequest?.date);
+        setCPFInput(editRequest.prevRequest?.cpf);
+        setCropInput(editRequest.prevRequest?.crop);
+        setLatitudeInput(editRequest.prevRequest?.latitude_location);
+        setLongitudeInput(editRequest.prevRequest?.longitude_location);
+        setEventInput(editRequest.prevRequest?.event);
+      } else {
+        clearAllInputs();
+      }
+    };
+    updateState();
+  }, [editRequest]);
 
   return (
     <div>
-      <h1>Cadastro de pedido</h1>
+      <h1>
+        {editRequest.edit ? 'Atualização' : 'Cadastro'}
+        {' '}
+        de pedido
+      </h1>
+      {editRequest.edit && (
+        <button
+          type="button"
+          onClick={() => setEditRequest({ edit: false, prevRequest: {} })}
+        >
+          Cancelar edição
+        </button>
+      )}
       <form>
         <label htmlFor="name-input">
           Nome:
@@ -50,6 +110,7 @@ export default function Form() {
             value={nameInput}
             onChange={({ target: { value } }) => setNameInput(value)}
           />
+          {verifyName(nameInput) ? 'V' : 'X'}
         </label>
 
         <label htmlFor="email-input">
@@ -60,6 +121,7 @@ export default function Form() {
             value={emailInput}
             onChange={({ target: { value } }) => setEmailInput(value)}
           />
+          {verifyEmail(emailInput) ? 'V' : 'X'}
         </label>
 
         <label htmlFor="CPF-input">
@@ -70,6 +132,7 @@ export default function Form() {
             value={CPFInput}
             onChange={({ target: { value } }) => setCPFInput(value)}
           />
+          {verifyCPF(CPFInput) ? 'V' : 'X'}
         </label>
 
         <label htmlFor="crop-input">
@@ -80,6 +143,7 @@ export default function Form() {
             value={cropInput}
             onChange={({ target: { value } }) => setCropInput(value)}
           />
+          {verifyCrop(cropInput) ? 'V' : 'X'}
         </label>
 
         <label htmlFor="date-input">
@@ -90,6 +154,7 @@ export default function Form() {
             value={dateInput}
             onChange={({ target: { value } }) => setDateInput(value)}
           />
+          {verifyDate(dateInput) ? 'V' : 'X'}
         </label>
 
         <label htmlFor="latitude-input">
@@ -100,6 +165,7 @@ export default function Form() {
             value={latitudeInput}
             onChange={({ target: { value } }) => setLatitudeInput(value)}
           />
+          {verifyLatitude(Number(latitudeInput)) ? 'V' : 'X'}
         </label>
 
         <label htmlFor="longitude-input">
@@ -110,6 +176,7 @@ export default function Form() {
             value={longitudeInput}
             onChange={({ target: { value } }) => setLongitudeInput(value)}
           />
+          {verifyLongitude(Number(longitudeInput)) ? 'V' : 'X'}
         </label>
 
         <label htmlFor="event-input">
@@ -121,14 +188,15 @@ export default function Form() {
           >
             { eventList.map((event) => <option value={event} key={`event-option-${event}`}>{ event.toLowerCase() }</option>) }
           </select>
+          {verifyEvent(eventInput) ? 'V' : 'X'}
         </label>
 
         <button
           disabled={isButtonDisabled()}
           type="button"
-          onClick={onClickRegisterButton}
+          onClick={editRequest.edit ? onClickUpdateButton : onClickRegisterButton}
         >
-          Cadastrar
+          {editRequest.edit ? 'Atualizar' : 'Cadastrar' }
         </button>
 
       </form>
