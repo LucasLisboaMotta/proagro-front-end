@@ -4,7 +4,7 @@ import context from '../context/context';
 import deleteRequest from '../api/deleteRequestById';
 
 export default function Card({ request }) {
-  const { updateRequestArray } = useContext(context);
+  const { updateRequestArray, setEditRequest } = useContext(context);
 
   const refactorCPF = (cpf) => {
     const newCPF = cpf.split('');
@@ -21,6 +21,8 @@ export default function Card({ request }) {
     updateRequestArray();
   };
 
+  const buttonFunctionEditRequest = () => setEditRequest({ edit: true, prevRequest: request });
+
   return (
     <tr>
       <td>{request.name}</td>
@@ -32,7 +34,14 @@ export default function Card({ request }) {
       <td>{request.longitude_location}</td>
       <td>{request.event.toLowerCase()}</td>
       <td>{refactorDate(request.create_at)}</td>
-      <td><button type="button" onClick={() => buttonFunctionDeleteRequest(request.id)}>Excluir</button></td>
+      <td>
+        <button type="button" onClick={buttonFunctionEditRequest}>
+          Editar
+        </button>
+        <button type="button" onClick={() => buttonFunctionDeleteRequest(request.id)}>
+          Excluir
+        </button>
+      </td>
     </tr>
   );
 }
