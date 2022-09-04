@@ -8,9 +8,9 @@ export const verifyCPF = (CPF) => /(^\d{11}$)/g.test(CPF);
 
 export const verifyDate = (date) => new Date(date) <= Date.now();
 
-export const verifyLatitude = (latitude) => typeof latitude === 'number';
+export const verifyLatitude = (latitude) => !Number.isNaN(latitude) && latitude !== 0;
 
-export const verifyLongitude = (longitude) => typeof longitude === 'number';
+export const verifyLongitude = (longitude) => !Number.isNaN(longitude) && longitude !== 0;
 
 export const verifyEvent = (event) => eventList.includes(event);
 
