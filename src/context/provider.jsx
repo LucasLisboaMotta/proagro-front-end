@@ -5,6 +5,7 @@ import context from './context';
 
 function Provider({ children }) {
   const [requestArray, setRequestArray] = useState([]);
+  const [editRequest, setEditRequest] = useState({ edit: false, prevRequest: {} });
 
   const updateRequestArray = async () => {
     const newRequestArray = await getAllExemptionRequests();
@@ -14,9 +15,13 @@ function Provider({ children }) {
   const value = useMemo(() => ({
     requestArray,
     updateRequestArray,
+    editRequest,
+    setEditRequest,
   }), [
     requestArray,
     updateRequestArray,
+    editRequest,
+    setEditRequest,
   ]);
 
   useEffect(() => { updateRequestArray(); }, []);
