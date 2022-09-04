@@ -6,7 +6,7 @@ import createDivergentArray from '../utils/createDivergentArray';
 
 export default function DivergentRequest() {
   const { requestArray } = useContext(context);
-  const [showDivergent, setShowDivergent] = useState(false);
+  const [divergentIndex, setDivergentIndex] = useState(0);
 
   const divergentArray = createDivergentArray(requestArray);
 
@@ -20,32 +20,55 @@ export default function DivergentRequest() {
     return 0;
   });
 
+  const decrementButton = () => {
+    setDivergentIndex((prevIndex) => {
+      const newIndex = prevIndex - 1;
+      if (newIndex > 0) return newIndex;
+      return 0;
+    });
+  };
+
+  const incrementButton = () => {
+    setDivergentIndex((prevIndex) => {
+      const newIndex = prevIndex + 1;
+      if (newIndex < divergentArray.length) return newIndex;
+      return divergentArray.length - 1;
+    });
+  };
+
   return (divergentArray.length > 0
     && (
     <div>
       <h2>{divergentMessage}</h2>
-      <label htmlFor="divergent-checkbox">
-        Mostrar divergências?
-        <input
-          id="divergent-checkbox"
-          type="checkbox"
-          value={showDivergent}
-          onChange={({ target: { checked } }) => setShowDivergent(checked)}
-        />
-      </label>
-      {showDivergent && (
+
       <table>
         <TableHeader />
         <tbody>
-          {divergentArray.map((el) => (
-            <>
-              <Card key={`divergent - ${el.id} - ${el.firstElement.id}`} request={el.firstElement} />
-              <Card key={`divergent - ${el.id} - ${el.secondElement.id}`} request={el.secondElement} />
-            </>
-          ))}
+          <Card
+            key={`divergent-${divergentArray[divergentIndex].id}-${divergentArray[divergentIndex].firstElement.id}`}
+            request={divergentArray[divergentIndex].firstElement}
+          />
+          <Card
+            key={`divergent-${divergentArray[divergentIndex].id}-${divergentArray[divergentIndex].secondElement.id}`}
+            request={divergentArray[divergentIndex].secondElement}
+          />
         </tbody>
       </table>
-      )}
+      <button
+        type="button"
+        onClick={decrementButton}
+        disabled={divergentIndex === 0}
+      >
+        {'<'}
+      </button>
+      <span>{divergentIndex + 1}</span>
+      <button
+        type="button"
+        onClick={incrementButton}
+        disabled={divergentIndex === divergentArray.length - 1}
+      >
+        {'>'}
+      </button>
     </div>
     )
   );
