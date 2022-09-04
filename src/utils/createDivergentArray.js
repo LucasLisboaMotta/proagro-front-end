@@ -10,7 +10,7 @@ const filterCompare = (a, b) => (
 const createDivergentMap = (a, b) => {
   const arrayOrderedById = [a, b].sort(sortById);
   return {
-    id: arrayOrderedById[0].id + arrayOrderedById[1].id,
+    id: `${arrayOrderedById[0].id}-${arrayOrderedById[1].id}`,
     firstElement: arrayOrderedById[0],
     secondElement: arrayOrderedById[1],
   };
@@ -25,7 +25,7 @@ export default function createDivergentArray(requestArray) {
       .map((mapElement) => createDivergentMap(mapElement, reduceElement));
 
     elementMap.forEach((forEachElement) => {
-      if (!acc.find((findElement) => forEachElement.id === findElement.id)) {
+      if (!acc.some((someElement) => forEachElement.id === someElement.id)) {
         acc.push(forEachElement);
       }
     });
