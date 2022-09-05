@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import context from '../context/context';
 import TableHeader from './TableHeader';
+import FilterRequestList from './FilterRequestList';
 import Card from './Card';
 
 export default function ExemptionRequestList() {
-  const { requestArray } = useContext(context);
+  const { requestArray, useFilter, filterParams } = useContext(context);
 
   const sortRequest = (
     { create_at: createA, name: nameA },
@@ -24,10 +25,15 @@ export default function ExemptionRequestList() {
       ? (
         <div>
           <h2>Requisições feitas</h2>
+          <FilterRequestList />
           <table>
             <TableHeader />
             <tbody>
-              {requestArray.sort(sortRequest).map(mapCards)}
+              {
+              useFilter
+                ? requestArray.sort(sortRequest).filter(filterParams).map(mapCards)
+                : requestArray.sort(sortRequest).map(mapCards)
+              }
             </tbody>
           </table>
         </div>
