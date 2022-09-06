@@ -32,15 +32,18 @@ export default function FilterRequestList() {
 
   return (
     <div>
-      <label htmlFor="filter-input-checkbox">
-        Filtrar lista?
-        <input
-          id="filter-input-checkbox"
-          type="checkbox"
-          value={useFilter}
-          onChange={({ target: { checked } }) => setUseFilter(checked)}
-        />
-      </label>
+      <div>
+        <label htmlFor="filter-input-checkbox">
+          Filtrar lista
+          {' '}
+          <input
+            id="filter-input-checkbox"
+            type="checkbox"
+            value={useFilter}
+            onChange={({ target: { checked } }) => setUseFilter(checked)}
+          />
+        </label>
+      </div>
       <label htmlFor="filter-select-option">
         Coluna
         <select

@@ -1,0 +1,12 @@
+body {
+  background-color: rgb(35, 39, 35);
+  color: beige;
+}
+
+.App {
+  text-align: center;
+}
+
+table {
+  margin: 0 auto;
+}

@@ -4,16 +4,16 @@ export default function TableHeader() {
   return (
     <thead>
       <tr>
-        <th>Nome</th>
-        <th>E-mail</th>
-        <th>CPF</th>
-        <th>Tipo de lavoura</th>
-        <th>Data do evento</th>
-        <th>Latitude</th>
-        <th>Longitude</th>
-        <th>Tipo de evento</th>
-        <th>Data da requisição</th>
-        <th>Editar/Excluir</th>
+        <th scope="col">Nome</th>
+        <th scope="col">E-mail</th>
+        <th scope="col">CPF</th>
+        <th scope="col">Lavoura</th>
+        <th scope="col">Data do evento</th>
+        <th scope="col">Latitude</th>
+        <th scope="col">Longitude</th>
+        <th scope="col">Evento</th>
+        <th scope="col">Data da requisição</th>
+        <th scope="col">Editar/Excluir</th>
       </tr>
     </thead>
   );

@@ -26,7 +26,7 @@ export default function ExemptionRequestList() {
         <div>
           <h2>Requisições feitas</h2>
           <FilterRequestList />
-          <table>
+          <table className="table table-dark">
             <TableHeader />
             <tbody>
               {

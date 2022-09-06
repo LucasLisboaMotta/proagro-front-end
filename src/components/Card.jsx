@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { shape, number, string } from 'prop-types';
+import { Button, ButtonGroup } from 'bootstrap-4-react';
 import context from '../context/context';
 import deleteRequest from '../api/deleteRequestById';
 
@@ -35,12 +36,14 @@ export default function Card({ request }) {
       <td>{request.event.toLowerCase()}</td>
       <td>{refactorDate(request.create_at)}</td>
       <td>
-        <button type="button" onClick={buttonFunctionEditRequest}>
-          Editar
-        </button>
-        <button type="button" onClick={() => buttonFunctionDeleteRequest(request.id)}>
-          Excluir
-        </button>
+        <ButtonGroup aria-label="Basic example">
+          <Button info type="button" onClick={buttonFunctionEditRequest}>
+            Editar
+          </Button>
+          <Button danger type="button" onClick={() => buttonFunctionDeleteRequest(request.id)}>
+            Excluir
+          </Button>
+        </ButtonGroup>
       </td>
     </tr>
   );

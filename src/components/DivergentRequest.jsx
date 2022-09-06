@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { Alert } from 'bootstrap-4-react';
 import context from '../context/context';
 import TableHeader from './TableHeader';
 import Card from './Card';
@@ -38,38 +39,38 @@ export default function DivergentRequest() {
 
   return (divergentArray.length > 0
     && (
-    <div>
-      <h2>{divergentMessage}</h2>
+      <Alert warning>
+        <h2>{divergentMessage}</h2>
 
-      <table>
-        <TableHeader />
-        <tbody>
-          <Card
-            key={`divergent-${divergentArray[divergentIndex].id}-${divergentArray[divergentIndex].firstElement.id}`}
-            request={divergentArray[divergentIndex].firstElement}
-          />
-          <Card
-            key={`divergent-${divergentArray[divergentIndex].id}-${divergentArray[divergentIndex].secondElement.id}`}
-            request={divergentArray[divergentIndex].secondElement}
-          />
-        </tbody>
-      </table>
-      <button
-        type="button"
-        onClick={decrementButton}
-        disabled={divergentIndex === 0}
-      >
-        {'<'}
-      </button>
-      <span>{divergentIndex + 1}</span>
-      <button
-        type="button"
-        onClick={incrementButton}
-        disabled={divergentIndex === divergentArray.length - 1}
-      >
-        {'>'}
-      </button>
-    </div>
+        <table className="table">
+          <TableHeader />
+          <tbody>
+            <Card
+              key={`divergent-${divergentArray[divergentIndex].id}-${divergentArray[divergentIndex].firstElement.id}`}
+              request={divergentArray[divergentIndex].firstElement}
+            />
+            <Card
+              key={`divergent-${divergentArray[divergentIndex].id}-${divergentArray[divergentIndex].secondElement.id}`}
+              request={divergentArray[divergentIndex].secondElement}
+            />
+          </tbody>
+        </table>
+        <button
+          type="button"
+          onClick={decrementButton}
+          disabled={divergentIndex === 0}
+        >
+          {'<'}
+        </button>
+        <span>{divergentIndex + 1}</span>
+        <button
+          type="button"
+          onClick={incrementButton}
+          disabled={divergentIndex === divergentArray.length - 1}
+        >
+          {'>'}
+        </button>
+      </Alert>
     )
   );
 }
