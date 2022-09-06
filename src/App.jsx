@@ -3,7 +3,7 @@ import Form from './components/Form';
 import ExemptionRequestList from './components/ExemptionRequestList';
 import DivergentRequest from './components/DivergentRequest';
 import Provider from './context/provider';
-import './App.css';
+import './style/App.css';
 
 function App() {
   return (
